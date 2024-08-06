@@ -56,7 +56,7 @@ Function Invoke-ExecSAMSetup {
         Get-CIPPAuthentication
     }
 
-    $KV = $ENV:KEYVAULT_NAME
+    $KV = $ENV:WEBSITE_DEPLOYMENT_ID
     $Table = Get-CIPPTable -TableName SAMWizard
     $Rows = Get-CIPPAzDataTableEntity @Table | Where-Object -Property Timestamp -GT (Get-Date).AddMinutes(-10)
 

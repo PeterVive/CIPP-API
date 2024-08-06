@@ -12,7 +12,7 @@ function Set-PwPushConfig {
             $ApiKey = (Get-CIPPAzDataTableEntity @DevSecretsTable -Filter "PartitionKey eq 'PWPush' and RowKey eq 'PWPush'").APIKey
         } else {
             $null = Connect-AzAccount -Identity
-            $ApiKey = Get-AzKeyVaultSecret -VaultName $ENV:KEYVAULT_NAME -Name 'PWPush' -AsPlainText
+            $ApiKey = Get-AzKeyVaultSecret -VaultName $ENV:WEBSITE_DEPLOYMENT_ID -Name 'PWPush' -AsPlainText
         }
         if ($ApiKey) {
             $InitParams.APIKey = $ApiKey

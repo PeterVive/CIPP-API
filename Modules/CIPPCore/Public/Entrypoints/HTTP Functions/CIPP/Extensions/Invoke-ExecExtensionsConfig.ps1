@@ -47,7 +47,7 @@ Function Invoke-ExecExtensionsConfig {
                 Write-Information 'Not sending to keyvault. Key previously set or left blank.'
             } else {
                 Write-Information 'writing API Key to keyvault, and clearing.'
-                Write-Information "$ENV:KEYVAULT_NAME"
+                Write-Information "$ENV:WEBSITE_DEPLOYMENT_ID"
                 if ($Request.Body.$APIKey.APIKey) {
                     if ($env:AzureWebJobsStorage -eq 'UseDevelopmentStorage=true') {
                         $DevSecretsTable = Get-CIPPTable -tablename 'DevSecrets'
@@ -58,7 +58,7 @@ Function Invoke-ExecExtensionsConfig {
                         }
                         Add-CIPPAzDataTableEntity @DevSecretsTable -Entity $Secret -Force
                     } else {
-                        $null = Set-AzKeyVaultSecret -VaultName $ENV:KEYVAULT_NAME -Name $APIKey -SecretValue (ConvertTo-SecureString -AsPlainText -Force -String $Request.Body.$APIKey.APIKey)
+                        $null = Set-AzKeyVaultSecret -VaultName $ENV:WEBSITE_DEPLOYMENT_ID -Name $APIKey -SecretValue (ConvertTo-SecureString -AsPlainText -Force -String $Request.Body.$APIKey.APIKey)
                     }
                 }
                 if ($Request.Body.$APIKey.PSObject.Properties -notcontains 'APIKey') {
