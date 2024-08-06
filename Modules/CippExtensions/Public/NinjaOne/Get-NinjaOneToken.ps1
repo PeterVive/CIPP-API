@@ -11,7 +11,7 @@ function Get-NinjaOneToken {
             $ClientSecret = (Get-CIPPAzDataTableEntity @DevSecretsTable -Filter "PartitionKey eq 'NinjaOne' and RowKey eq 'NinjaOne'").APIKey
         } else {
             $null = Connect-AzAccount -Identity
-            $ClientSecret = (Get-AzKeyVaultSecret -VaultName $ENV:WEBSITE_DEPLOYMENT_ID -Name 'NinjaOne' -AsPlainText)
+            $ClientSecret = (Get-AzKeyVaultSecret -VaultName $ENV:KEYVAULT_NAME -Name 'NinjaOne' -AsPlainText)
         }
     } else {
         $ClientSecret = $ENV:NinjaClientSecret

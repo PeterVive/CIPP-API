@@ -20,7 +20,7 @@ if ($env:AzureWebJobsStorage -eq 'UseDevelopmentStorage=true') {
         Disable-AzContextAutosave -Scope Process | Out-Null
         $AzSession = Connect-AzAccount -Identity
     }
-    $KV = $ENV:WEBSITE_DEPLOYMENT_ID
+    $KV = $ENV:KEYVAULT_NAME
     if ($Refreshtoken) {
         Set-AzKeyVaultSecret -VaultName $kv -Name 'RefreshToken' -SecretValue (ConvertTo-SecureString -String $Refreshtoken -AsPlainText -Force)
     } else {

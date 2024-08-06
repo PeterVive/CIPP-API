@@ -9,7 +9,7 @@ function Connect-HuduAPI {
         $APIKey = (Get-CIPPAzDataTableEntity @DevSecretsTable -Filter "PartitionKey eq 'Hudu' and RowKey eq 'Hudu'").APIKey
     } else {
         $null = Connect-AzAccount -Identity
-        $APIKey = (Get-AzKeyVaultSecret -VaultName $ENV:WEBSITE_DEPLOYMENT_ID -Name 'Hudu' -AsPlainText)
+        $APIKey = (Get-AzKeyVaultSecret -VaultName $ENV:KEYVAULT_NAME -Name 'Hudu' -AsPlainText)
     }
     New-HuduBaseURL -BaseURL $Configuration.BaseURL
     New-HuduAPIKey -ApiKey $APIKey

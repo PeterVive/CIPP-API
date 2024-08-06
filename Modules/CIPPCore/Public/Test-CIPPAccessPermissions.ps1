@@ -38,7 +38,7 @@ function Test-CIPPAccessPermissions {
                 Disable-AzContextAutosave -Scope Process | Out-Null
                 $AzSession = Connect-AzAccount -Identity
 
-                $KV = $ENV:WEBSITE_DEPLOYMENT_ID
+                $KV = $ENV:KEYVAULT_NAME
                 $KeyVaultRefresh = Get-AzKeyVaultSecret -VaultName $kv -Name 'RefreshToken' -AsPlainText
                 if ($ENV:RefreshToken -ne $KeyVaultRefresh) {
                     Write-Host 'Setting success to false due to nonmaching token.'

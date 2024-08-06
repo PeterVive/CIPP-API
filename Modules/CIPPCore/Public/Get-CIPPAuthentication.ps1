@@ -22,7 +22,7 @@ function Get-CIPPAuthentication {
             Connect-AzAccount -Identity
 
             $Variables | ForEach-Object {
-                Set-Item -Path ENV:$_ -Value (Get-AzKeyVaultSecret -VaultName $ENV:WEBSITE_DEPLOYMENT_ID -Name $_ -AsPlainText -ErrorAction Stop) -Force
+                Set-Item -Path ENV:$_ -Value (Get-AzKeyVaultSecret -VaultName $ENV:KEYVAULT_NAME -Name $_ -AsPlainText -ErrorAction Stop) -Force
             }
         }
         $ENV:SetFromProfile = $true

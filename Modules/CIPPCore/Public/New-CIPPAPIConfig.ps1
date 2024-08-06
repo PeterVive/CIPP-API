@@ -8,7 +8,7 @@ function New-CIPPAPIConfig {
         $resetpassword
     )
     $null = Connect-AzAccount -Identity
-    $currentapp = (Get-AzKeyVaultSecret -VaultName $ENV:WEBSITE_DEPLOYMENT_ID -Name 'CIPPAPIAPP' -AsPlainText)
+    $currentapp = (Get-AzKeyVaultSecret -VaultName $ENV:KEYVAULT_NAME -Name 'CIPPAPIAPP' -AsPlainText)
     $subscription = $($ENV:WEBSITE_OWNER_NAME).Split('+')[0]
 
     try {
@@ -48,7 +48,7 @@ function New-CIPPAPIConfig {
             $currentBody = ConvertTo-Json -Depth 15 -InputObject ($currentSettings | Select-Object Properties)
             Write-Host 'writing to Azure'
             $SetAPIAuth = New-GraphPOSTRequest -type 'PUT' -uri "https://management.azure.com/subscriptions/$($subscription)/resourceGroups/$ENV:WEBSITE_RESOURCE_GROUP/providers/Microsoft.Web/sites/$ENV:WEBSITE_SITE_NAME/Config/authsettingsV2?api-version=2018-11-01" -scope 'https://management.azure.com/.default' -NoAuthCheck $true -body $currentBody
-            $null = Set-AzKeyVaultSecret -VaultName $ENV:WEBSITE_DEPLOYMENT_ID -Name 'CIPPAPIAPP' -SecretValue (ConvertTo-SecureString -String $APIApp.AppID -AsPlainText -Force)
+            $null = Set-AzKeyVaultSecret -VaultName $ENV:KEYVAULT_NAME -Name 'CIPPAPIAPP' -SecretValue (ConvertTo-SecureString -String $APIApp.AppID -AsPlainText -Force)
             Write-LogMessage -user $ExecutingUser -API $APINAME -tenant 'None '-message 'Successfully setup CIPP-API Access.' -Sev 'info'
         }
         return @{
